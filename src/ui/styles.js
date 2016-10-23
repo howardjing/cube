@@ -4,41 +4,65 @@ import { StyleSheet } from 'aphrodisiac';
 import { styles as solveStyles } from './solve-time';
 import merge from './styles/merge';
 
-const app = {
+const container = {
+  display: 'flex',
+  flex: '1',
+  paddingTop: '40px',
+  backgroundColor: 'salmon'
+};
+
+const primary = {
+  flex: '3',
+  display: 'flex',
+  backgroundColor: 'pink',
   textAlign: 'center',
 };
 
-const appLogo = {
-  height: '80px',
+const secondary = {
+  flex: '1',
+  backgroundColor: 'purple',
+  textAlign: 'center',
 };
 
-const appHeader = {
-  backgroundColor: '#222',
-  height: '150px',
-  padding: '20px',
-  color: 'white',
+const offset = {
+  backgroundColor: 'cyan',
+  flex: '1',
 };
 
-const appIntro = {
-  fontSize: 'large',
-};
+const currentSolve = {
+  display: 'flex',
+  flex: '2',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  backgroundColor: 'cornsilk',
+}
 
-const timer = merge(solveStyles.time, {
+const scramble = {
+  backgroundColor: 'grey'
+}
+
+const solveTime = merge(solveStyles.time, {
   fontSize: '72px',
+  backgroundColor: 'magenta',
 });
 
+
 const styles: {
-  app: StyleSheetProp,
-  appLogo: StyleSheetProp,
-  appHeader: StyleSheetProp,
-  appIntro: StyleSheetProp,
-  timer: StyleSheetProp,
+  container: StyleSheetProp,
+  primary: StyleSheetProp,
+  secondary: StyleSheetProp,
+  offset: StyleSheetProp,
+  currentSolve: StyleSheetProp,
+  scramble: StyleSheetProp,
+  solveTime: StyleSheetProp,
 } = StyleSheet.create({
-  app,
-  appLogo,
-  appHeader,
-  appIntro,
-  timer,
+  container,
+  primary,
+  secondary,
+  offset,
+  currentSolve,
+  scramble,
+  solveTime,
 });
 
 export default styles;
