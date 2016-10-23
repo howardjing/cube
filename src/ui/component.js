@@ -8,7 +8,6 @@ import PreviousSolves from './previous-solves';
 const App = () => (
   <div className={css(styles.container)}>
     <div className={css(styles.primary)}>
-      <div className={css(styles.offset)} />
       <div className={css(styles.currentSolve)}>
         <div className={css(styles.scramble)}>
           Some sick scramble

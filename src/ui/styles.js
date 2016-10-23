@@ -5,28 +5,22 @@ import { styles as solveStyles } from './solve-time';
 import merge from './styles/merge';
 
 const container = {
-  display: 'flex',
   flex: '1',
-  paddingTop: '40px',
+  padding: '20px',
   backgroundColor: 'salmon'
 };
 
 const primary = {
-  flex: '3',
   display: 'flex',
   backgroundColor: 'pink',
   textAlign: 'center',
+  height: '100%',
 };
 
 const secondary = {
-  flex: '1',
-  backgroundColor: 'purple',
-  textAlign: 'center',
-};
-
-const offset = {
-  backgroundColor: 'cyan',
-  flex: '1',
+  position: 'fixed',
+  top: '20px',
+  right: '20px',
 };
 
 const currentSolve = {
@@ -51,7 +45,6 @@ const styles: {
   container: StyleSheetProp,
   primary: StyleSheetProp,
   secondary: StyleSheetProp,
-  offset: StyleSheetProp,
   currentSolve: StyleSheetProp,
   scramble: StyleSheetProp,
   solveTime: StyleSheetProp,
@@ -59,7 +52,6 @@ const styles: {
   container,
   primary,
   secondary,
-  offset,
   currentSolve,
   scramble,
   solveTime,
