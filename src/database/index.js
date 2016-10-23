@@ -1,6 +1,15 @@
 // @flow
 import Dexie from 'dexie';
 
+type Solve = {
+  id: number,
+  start: number,
+  inspectionTime: number,
+  solveTime: number,
+  scramble: string[],
+  tags: string[],
+};
+
 class Database {
   db: Dexie;
 
@@ -11,7 +20,7 @@ class Database {
     });
   }
 
-  requestSolves = (): Promise<any[]> => {
+  requestSolves = (): Promise<Solve[]> => {
     return this.db.solves
       .orderBy('start')
       .reverse()
@@ -20,3 +29,6 @@ class Database {
 }
 
 export default Database;
+export type {
+  Solve
+};
