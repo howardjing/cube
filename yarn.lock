@@ -1573,6 +1573,10 @@ detect-port@1.0.1:
   dependencies:
     commander "~2.8.1"
 
+dexie@^v2.0.0-beta.3:
+  version "2.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/dexie/-/dexie-2.0.0-beta.3.tgz#d83edf0a2b6d7ae801e07cf34cd7199d447fc350"
+
 diff@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.0.1.tgz#a52d90cc08956994be00877bff97110062582c35"
