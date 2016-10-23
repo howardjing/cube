@@ -93,6 +93,13 @@ anymatch@^1.3.0:
     arrify "^1.0.0"
     micromatch "^2.1.5"
 
+aphrodisiac:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/aphrodisiac/-/aphrodisiac-0.3.0.tgz#819e9ba9c4745137f6792b507013f1f5831e1cf5"
+  dependencies:
+    jss "^5.5.4"
+    jss-preset-default "^0.4.0"
+
 append-transform@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/append-transform/-/append-transform-0.3.0.tgz#d6933ce4a85f09445d9ccc4cc119051b7381a813"
@@ -1414,6 +1421,12 @@ css-selector-tokenizer@^0.6.0:
     fastparse "^1.1.1"
     regexpu-core "^1.0.0"
 
+css-vendor@^0.3.4:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/css-vendor/-/css-vendor-0.3.6.tgz#0ae73f214b8a6d2d84e4c0f647145c1391bfedfa"
+  dependencies:
+    is-browser "^2.0.1"
+
 css-what@2.1:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/css-what/-/css-what-2.1.0.tgz#9467d032c38cfaefb9f2d79501253062f87fa1bd"
@@ -2579,6 +2592,10 @@ is-binary-path@^1.0.0:
   dependencies:
     binary-extensions "^1.0.0"
 
+is-browser@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/is-browser/-/is-browser-2.0.1.tgz#8bf0baf799a9c62fd9de5bcee4cf3397c3e7529a"
+
 is-buffer@^1.0.2:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.4.tgz#cfc86ccd5dc5a52fa80489111c6920c457e2d98b"
@@ -3141,6 +3158,53 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
+jss-camel-case@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/jss-camel-case/-/jss-camel-case-2.0.0.tgz#735f867a9e1ea41bfdf80ef90bf0ac3dfeb16d0d"
+
+jss-default-unit@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/jss-default-unit/-/jss-default-unit-4.0.1.tgz#5e681b433e70d50c4e78c366c5553650ecfb0cc3"
+
+jss-extend@^2.0.1:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/jss-extend/-/jss-extend-2.0.3.tgz#c3cff6b901fa75e2c91693d5b174e52effaa5a45"
+
+jss-nested@^2.4.0:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/jss-nested/-/jss-nested-2.4.3.tgz#c248b926a1be1009438bc05f50a4a88f4ec216da"
+  dependencies:
+    warning "^3.0.0"
+
+jss-preset-default@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/jss-preset-default/-/jss-preset-default-0.4.0.tgz#503e814e8c87456cdd81fbe4f3f5e2fdcbfb5dad"
+  dependencies:
+    jss-camel-case "^2.0.0"
+    jss-default-unit "^4.0.1"
+    jss-extend "^2.0.1"
+    jss-nested "^2.4.0"
+    jss-props-sort "^2.0.0"
+    jss-vendor-prefixer "^3.0.0"
+
+jss-props-sort@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/jss-props-sort/-/jss-props-sort-2.0.0.tgz#5bfa7a409c3ec69e73499fe5101760977954ff6d"
+
+jss-vendor-prefixer@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/jss-vendor-prefixer/-/jss-vendor-prefixer-3.0.0.tgz#387195557526acf6908c2cb7f5353ae2bb689731"
+  dependencies:
+    css-vendor "^0.3.4"
+
+jss@^5.5.4:
+  version "5.5.5"
+  resolved "https://registry.yarnpkg.com/jss/-/jss-5.5.5.tgz#5f7bc59106b5fba1664e3c44d59e07e711784003"
+  dependencies:
+    is-browser "^2.0.1"
+    murmurhash-js "^1.0.0"
+    warning "^3.0.0"
+
 jsx-ast-utils@^1.0.0, jsx-ast-utils@^1.3.1:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-1.3.2.tgz#dff658782705352111f9865d40471bc4a955961e"
@@ -3193,6 +3257,10 @@ loader-utils@^0.2.11, loader-utils@^0.2.16, loader-utils@^0.2.3, loader-utils@^0
     emojis-list "^2.0.0"
     json5 "^0.5.0"
     object-assign "^4.0.1"
+
+lodash, lodash@^4.0.0, lodash@^4.15.0, lodash@^4.16.2, lodash@^4.16.4, lodash@^4.2.0, lodash@^4.3.0, "lodash@>=3.5 <5":
+  version "4.16.4"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
 
 lodash._arraycopy@^3.0.0:
   version "3.0.0"
@@ -3303,10 +3371,6 @@ lodash.words@^3.0.0:
   resolved "https://registry.yarnpkg.com/lodash.words/-/lodash.words-3.2.0.tgz#4e2a8649bc08745b17c695b1a3ce8fee596623b3"
   dependencies:
     lodash._root "^3.0.0"
-
-lodash@^4.0.0, lodash@^4.15.0, lodash@^4.16.2, lodash@^4.16.4, lodash@^4.2.0, lodash@^4.3.0, "lodash@>=3.5 <5":
-  version "4.16.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
 
 longest@^1.0.1:
   version "1.0.1"
@@ -3476,6 +3540,10 @@ multimatch@^2.1.0:
     array-union "^1.0.1"
     arrify "^1.0.0"
     minimatch "^3.0.0"
+
+murmurhash-js@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/murmurhash-js/-/murmurhash-js-1.0.0.tgz#b06278e21fc6c37fa5313732b0412bcb6ae15f51"
 
 mute-stream@0.0.5:
   version "0.0.5"
@@ -5165,6 +5233,12 @@ walker@~1.0.5:
   resolved "https://registry.yarnpkg.com/walker/-/walker-1.0.7.tgz#2f7f9b8fd10d677262b18a884e28d19618e028fb"
   dependencies:
     makeerror "1.0.x"
+
+warning@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
+  dependencies:
+    loose-envify "^1.0.0"
 
 watch@~0.10.0:
   version "0.10.0"
