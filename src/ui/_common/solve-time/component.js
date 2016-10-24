@@ -12,12 +12,12 @@ const SolveTime = ({
   className?: string,
   time: ?number,
 }) => {
-  const string = time ? format(time) : "--:--.---"
+  const formattedTime = time ? format(time) : "--:--.---"
   const klass = className || css(styles.time);
 
   return (
     <div className={klass}>
-      {string}
+      {formattedTime}
     </div>
   )
 }

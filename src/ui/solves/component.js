@@ -9,7 +9,9 @@ const Solves = ({
   solves: Solve[]
 }) => {
   const recent = solves.slice(0, 12).map((solve) => (
-    <li><SolveTime time={solve.solveTime} /></li>
+    <li key={solve.id}>
+      <SolveTime time={solve.solveTime} />
+    </li>
   ));
 
   return (

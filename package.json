@@ -13,7 +13,9 @@
     "mobx": "^2.6.0",
     "mobx-react": "^3.5.8",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-addons-shallow-compare": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-vis": "^0.6.4"
   },
   "scripts": {
     "start": "PORT=7777 react-scripts start",

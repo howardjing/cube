@@ -4,6 +4,7 @@ import { css } from 'aphrodisiac';
 import styles from './styles';
 import SolveTime from './_common/solve-time';
 import Solves from './solves';
+import Trend from './trend';
 
 const App = () => (
   <div className={css(styles.container)}>
@@ -21,7 +22,7 @@ const App = () => (
             Press and hold space to start inspecting
           </div>
         </div>
-        <div />
+        <Trend />
       </div>
     </div>
     <div className={css(styles.secondary)}>
