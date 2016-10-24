@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import Solve from '../../store/solve';
-import SolveTime from '../solve-time';
+import SolveTime from '../_common/solve-time';
 
-const PreviousSolves = ({
+const Solves = ({
   solves,
 }: {
   solves: Solve[]
@@ -19,4 +19,4 @@ const PreviousSolves = ({
   )
 }
 
-export default PreviousSolves;
+export default Solves;

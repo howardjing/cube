@@ -2,8 +2,8 @@
 import React from 'react';
 import { css } from 'aphrodisiac';
 import styles from './styles';
-import SolveTime from './solve-time';
-import PreviousSolves from './previous-solves';
+import SolveTime from './_common/solve-time';
+import Solves from './solves';
 
 const App = () => (
   <div className={css(styles.container)}>
@@ -25,7 +25,7 @@ const App = () => (
       </div>
     </div>
     <div className={css(styles.secondary)}>
-      <PreviousSolves />
+      <Solves />
     </div>
   </div>
 );

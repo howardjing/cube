@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import Component from './component';
 import Store from '../../store';
 
-const PreviousSOlves = ({ store }: {
+const Solves = ({ store }: {
   store: Store
 }) => {
   return (
@@ -14,5 +14,5 @@ const PreviousSOlves = ({ store }: {
   );
 };
 
-export default inject('store')(observer(PreviousSOlves));
+export default inject('store')(observer(Solves));
 

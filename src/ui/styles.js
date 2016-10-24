@@ -1,8 +1,8 @@
 // @flow
 
 import { StyleSheet } from 'aphrodisiac';
-import { styles as solveStyles } from './solve-time';
-import merge from './styles/merge';
+import { styles as solveStyles } from './_common/solve-time';
+import merge from './_common/styles/merge';
 
 const container = {
   flex: '1',

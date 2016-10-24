@@ -13,10 +13,8 @@ useStrict(true);
 const db = new Database();
 const store = new Store(db);
 
+// fetch data from indexedDB
 store.requestSolves()
-  .then((solves) => {
-    console.log("hey", solves);
-  });
 
 ReactDOM.render(
   <Provider store={store}>
