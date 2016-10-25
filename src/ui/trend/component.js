@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { css } from 'aphrodisiac';
 import {
   XYPlot,
   XAxis,
@@ -8,6 +9,7 @@ import {
 } from 'react-vis';
 import 'react-vis/main.css';
 import Solve from '../../store/solve';
+import styles from './styles';
 // import { format as formatSolveTime } from '../_common/solve-time';
 
 const Trend = ({
@@ -35,22 +37,24 @@ const Trend = ({
   const height = 200;
 
   return (
-    <XYPlot
-      width={width}
-      height={height}
-      yDomain={[0, maxTime]}
-      xType="ordinal"
-    >
-      <LineSeries
-        data={data}
-        strokeWidth={1}
-      />
-      <XAxis
-        tickSize={0}
-        tickValues={[]}
-      />
-      <YAxis tickSize={0} />
-    </XYPlot>
+    <div className={css(styles.trend)}>
+      <XYPlot
+        width={width}
+        height={height}
+        yDomain={[0, maxTime]}
+        xType="ordinal"
+      >
+        <LineSeries
+          data={data}
+          strokeWidth={1}
+        />
+        <XAxis
+          tickSize={0}
+          tickValues={[]}
+        />
+        <YAxis tickSize={0} />
+      </XYPlot>
+    </div>
   );
 }
 

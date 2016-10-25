@@ -9,13 +9,20 @@ class Solve {
   scramble: string[];
   tags: string[];
 
-  constructor(json: SolveJson) {
-    this.id = json.id;
-    this.start = json.start;
-    this.inspectionTime = json.inspectionTime;
-    this.solveTime = json.solveTime;
-    this.scramble = json.scramble;
-    this.tags = json.tags;
+  constructor() {
+    this.scramble = ['F', 'U'];
+    this.tags = [];
+  }
+
+  static fromJson(json: SolveJson) {
+    const solve = new Solve();
+    solve.id = json.id;
+    solve.start = json.start;
+    solve.inspectionTime = json.inspectionTime;
+    solve.solveTime = json.solveTime;
+    solve.scramble = json.scramble;
+    solve.tags = json.tags;
+    return solve;
   }
 }
 

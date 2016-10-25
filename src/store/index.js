@@ -7,10 +7,12 @@ import {
 import type Database, { Solve as SolveJson } from '../database';
 import Solve from './solve';
 
+type Status = "idle" | "inspecting" | "solving";
+
 const observables = {
   solves: [],
-  solve: null,
-  isSolving: false,
+  solve: new Solve(),
+  status: "idle",
 };
 
 class Store {
@@ -20,10 +22,10 @@ class Store {
   solves: Solve[];
 
   // the current solve
-  solve: ?Solve;
+  solve: Solve;
 
   // are we solving the current solve?
-  isSolving: boolean;
+  status: Status;
 
   constructor(db: Database) {
     this.db = db;
@@ -34,7 +36,7 @@ class Store {
     return this.db.requestSolves()
       .then((solves) => {
         return solves.map((json) =>
-          new Solve(json)
+          Solve.fromJson(json)
         );
       });
   }
