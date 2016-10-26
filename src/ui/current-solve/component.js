@@ -6,13 +6,21 @@ import SolveTime from '../_common/solve-time';
 import styles from './styles';
 
 const CurrentSolve = ({
-  solve
+  solve,
+  onClickRefresh,
 }: {
-  solve: Solve
+  solve: Solve,
+  onClickRefresh: () => void,
 }) => (
   <div className={css(styles.currentSolve)}>
     <div className={css(styles.scramble)}>
       {solve.scramble.join(" ")}
+      <span
+        className={css(styles.rescramble)}
+        onClick={onClickRefresh}
+      >
+        &nbsp;🔄
+      </span>
     </div>
     <div>
       <SolveTime

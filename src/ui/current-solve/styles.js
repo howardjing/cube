@@ -21,15 +21,20 @@ const solveTime = merge(solveStyles.time, {
   backgroundColor: 'magenta',
 });
 
+const rescramble = {
+  cursor: 'pointer',
+};
 
 const styles: {
   currentSolve: StyleSheetProp,
   scramble: StyleSheetProp,
   solveTime: StyleSheetProp,
+  rescramble: StyleSheetProp,
 } = StyleSheet.create({
   currentSolve,
   scramble,
   solveTime,
+  rescramble,
 });
 
 export default styles;

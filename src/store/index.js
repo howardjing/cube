@@ -47,7 +47,11 @@ class Store {
         this.solves = solves;
         return solves;
       }));
-  })
+  });
+
+  requestNewSolve = action(() => {
+    this.solve = new Solve();
+  });
 }
 
 export default Store;

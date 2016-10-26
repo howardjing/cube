@@ -12,6 +12,7 @@ const CurrentSolve = ({ store }: {
   return (
     <Component
       solve={solve}
+      onClickRefresh={store.requestNewSolve}
     />
   );
 };
