@@ -1,11 +1,12 @@
 // @flow
 import { StyleSheet } from 'aphrodisiac';
+import theme from '../styles/theme';
 
 const styles: {
   time: StyleSheetProp,
 } = StyleSheet.create({
   time: {
-    fontFamily: 'Roboto Mono, monospace',
+    fontFamily: theme.MONOSPACE_FONT,
   },
 });
 

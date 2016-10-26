@@ -3,6 +3,7 @@
 import { StyleSheet } from 'aphrodisiac';
 import { styles as solveStyles } from '../_common/solve-time';
 import merge from '../_common/styles/merge';
+import theme from '../_common/styles/theme';
 
 const currentSolve = {
   display: 'flex',
