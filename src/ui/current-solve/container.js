@@ -9,7 +9,6 @@ const CurrentSolve = ({ store }: {
   store: Store
 }) => {
   const solve: Solve = store.solve;
-  console.log("yo", solve)
   return (
     <Component
       solve={solve}

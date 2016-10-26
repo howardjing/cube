@@ -1,16 +1,18 @@
 // @flow
-import type { Solve as SolveJson } from '../database';
+import type { Solve as SolveJson } from '../../database';
+import scramble from './scramble';
+import type { Move } from './scramble';
 
 class Solve {
   id: ?number;
   start: ?number;
   inspectionTime: ?number;
   solveTime: ?number;
-  scramble: string[];
+  scramble: Move[];
   tags: string[];
 
   constructor() {
-    this.scramble = ['F', 'U'];
+    this.scramble = scramble();
     this.tags = [];
   }
 

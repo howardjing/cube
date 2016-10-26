@@ -1,12 +1,12 @@
 // @flow
 import Dexie from 'dexie';
-
+import type { Move } from '../store/solve';
 type Solve = {
   id: number,
   start: number,
   inspectionTime: number,
   solveTime: number,
-  scramble: string[],
+  scramble: Move[],
   tags: string[],
 };
 
