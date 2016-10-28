@@ -17,7 +17,7 @@ const scramble = {
   backgroundColor: 'grey'
 }
 
-const solveTime = merge(solveStyles.time, {
+const timer = merge(solveStyles.time, {
   fontSize: '72px',
   backgroundColor: 'magenta',
 });
@@ -29,12 +29,12 @@ const rescramble = {
 const styles: {
   currentSolve: StyleSheetProp,
   scramble: StyleSheetProp,
-  solveTime: StyleSheetProp,
+  timer: StyleSheetProp,
   rescramble: StyleSheetProp,
 } = StyleSheet.create({
   currentSolve,
   scramble,
-  solveTime,
+  timer,
   rescramble,
 });
 

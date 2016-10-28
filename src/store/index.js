@@ -7,12 +7,12 @@ import {
 import type Database, { Solve as SolveJson } from '../database';
 import Solve from './solve';
 
-type Status = "idle" | "inspecting" | "solving";
+type Status = 'idle' | 'inspecting' | 'solving';
 
 const observables = {
   solves: [],
-  solve: new Solve(),
-  status: "idle",
+  solve: Solve.build(),
+  status: 'idle',
 };
 
 class Store {
@@ -50,8 +50,47 @@ class Store {
   });
 
   requestNewSolve = action(() => {
-    this.solve = new Solve();
+    this.solve = Solve.build();
   });
+
+  requestStartInspecting = action(() => {
+    this.solve = this.solve.setStart(Date.now());
+    this.status = 'inspecting';
+  });
+
+  setInspectionTime = () => {
+    this.solve = this.solve.setInspectionTime(
+      Date.now() - this.solve.start
+    );
+  }
+
+  requestStartSolving = action(() => {
+    this.setInspectionTime();
+    this.status = 'solving';
+  });
+
+  requestStopSolving = action(() => {
+    this.setSolveTime();
+    this.status = 'idle';
+  });
+
+  /**
+   * @private
+   */
+  setSolveTime = () => {
+    this.solve = this.solve.setSolveTime(
+      Date.now() - (
+        this.solve.start +
+        this.solve.inspectionTime
+      )
+    );
+  };
+
+  requestTickInspection = action(this.setInspectionTime);
+  requestTickSolve = action(this.setSolveTime);
 }
 
 export default Store;
+export type {
+  Status
+};

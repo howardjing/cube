@@ -1,30 +1,35 @@
 // @flow
+import { fromJS, Record, List } from 'immutable';
 import type { Solve as SolveJson } from '../../database';
 import scramble from './scramble';
 import type { Move } from './scramble';
 
-class Solve {
-  id: ?number;
-  start: ?number;
-  inspectionTime: ?number;
-  solveTime: ?number;
-  scramble: Move[];
-  tags: string[];
-
-  constructor() {
-    this.scramble = scramble();
-    this.tags = [];
+class Solve extends Record({
+  id: null,
+  start: null,
+  inspectionTime: null,
+  solveTime: null,
+  scramble: List(),
+  tags: List(),
+}) {
+  static fromJson(json: SolveJson): Solve {
+    return new Solve(fromJS(json));
   }
 
-  static fromJson(json: SolveJson) {
-    const solve = new Solve();
-    solve.id = json.id;
-    solve.start = json.start;
-    solve.inspectionTime = json.inspectionTime;
-    solve.solveTime = json.solveTime;
-    solve.scramble = json.scramble;
-    solve.tags = json.tags;
-    return solve;
+  static build(): Solve {
+    return new Solve({ scramble: List(scramble()) });
+  }
+
+  setStart(timestamp: number): Solve {
+    return this.set('start', timestamp);
+  }
+
+  setInspectionTime(millis: number): Solve {
+    return this.set('inspectionTime', millis);
+  }
+
+  setSolveTime(millis: number): Solve {
+    return this.set('solveTime', millis);
   }
 }
 

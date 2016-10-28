@@ -8,11 +8,24 @@ import Store from '../../store';
 const CurrentSolve = ({ store }: {
   store: Store
 }) => {
-  const solve: Solve = store.solve;
+  const solve = store.solve;
+  const status = store.status;
+  const onClickRefresh = store.requestNewSolve;
+  const startInspecting = store.requestStartInspecting;
+  const startSolving = store.requestStartSolving;
+  const stopSolving = store.requestStopSolving;
+  const tickInspection = store.requestTickInspection;
+  const tickSolve = store.requestTickSolve;
   return (
     <Component
       solve={solve}
-      onClickRefresh={store.requestNewSolve}
+      status={status}
+      onClickRefresh={onClickRefresh}
+      startInspecting={startInspecting}
+      startSolving={startSolving}
+      stopSolving={stopSolving}
+      tickInspection={tickInspection}
+      tickSolve={tickSolve}
     />
   );
 };
