@@ -1,9 +1,8 @@
 // @flow
 import { fromJS, Record, List } from 'immutable';
 import type { Solve as SolveJson } from '../../database';
-import scramble from './scramble';
-import type { Move } from './scramble';
 
+// TODO: figure out how to add types to this
 class Solve extends Record({
   id: null,
   start: null,
@@ -17,7 +16,7 @@ class Solve extends Record({
   }
 
   static build(): Solve {
-    return new Solve({ scramble: List(scramble()) });
+    return new Solve();
   }
 
   setStart(timestamp: number): Solve {

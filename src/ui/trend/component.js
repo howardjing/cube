@@ -1,21 +1,21 @@
 // @flow
 import React from 'react';
+import { List } from 'immutable';
 import { css } from 'aphrodisiac';
 import {
   XYPlot,
   XAxis,
   YAxis,
-  LineSeries,
+  LineSeries
 } from 'react-vis';
 import 'react-vis/main.css';
 import Solve from '../../store/solve';
 import styles from './styles';
-// import { format as formatSolveTime } from '../_common/solve-time';
 
 const Trend = ({
   solves
 }: {
-  solves: Solve[]
+  solves: List<Solve>
 }) => {
   const data: { x: number, y: number }[] = [];
   // not using map / filter because flow doesn't play nice with filter.

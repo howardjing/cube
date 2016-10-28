@@ -3,14 +3,18 @@ import {
   extendObservable,
   action,
 } from 'mobx';
+import { List } from 'immutable';
 // eslint-disable-next-line no-unused-vars
 import type Database, { Solve as SolveJson } from '../database';
 import Solve from './solve';
+import type { Move } from './solve';
+import scramble from './scramble';
 
 type Status = 'idle' | 'inspecting' | 'solving';
 
 const observables = {
-  solves: [],
+  solves: List(),
+  scramble: List(scramble()),
   solve: Solve.build(),
   status: 'idle',
 };
@@ -19,10 +23,13 @@ class Store {
   db: Database;
 
   // previous solves
-  solves: Solve[];
+  solves: List<Solve>;
 
   // the current solve
   solve: Solve;
+
+  // the current scramble
+  scramble: List<Move>;
 
   // are we solving the current solve?
   status: Status;
@@ -47,6 +54,10 @@ class Store {
         this.solves = solves;
         return solves;
       }));
+  });
+
+  requestNewScramble = action(() => {
+    this.scramble = List(scramble());
   });
 
   requestNewSolve = action(() => {
@@ -92,5 +103,6 @@ class Store {
 
 export default Store;
 export type {
-  Status
+  Status,
+  Move,
 };

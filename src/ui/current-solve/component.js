@@ -1,13 +1,15 @@
 // @flow
 import React, { Component } from 'react';
+import { List } from 'immutable';
 import { css } from 'aphrodisiac';
-import type { Status } from '../../store';
+import type { Status, Move } from '../../store';
 import Solve from '../../store/solve';
 import SolveTime from '../_common/solve-time';
 import styles from './styles';
 
 type Props = {
   solve: Solve,
+  scramble: List<Move>,
   status: Status,
   onClickRefresh: () => void,
   startInspecting: () => void,
@@ -138,6 +140,7 @@ class CurrentSolve extends Component {
   render() {
     const {
       status,
+      scramble,
       solve,
       onClickRefresh
     } = this.props;
@@ -145,7 +148,7 @@ class CurrentSolve extends Component {
     return (
       <div className={css(styles.currentSolve)}>
         <div className={css(styles.scramble)}>
-          {solve.scramble.join(' ')}
+          {scramble.join(' ')}
           <span
             className={css(styles.rescramble)}
             onClick={onClickRefresh}

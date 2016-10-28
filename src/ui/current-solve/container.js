@@ -9,8 +9,9 @@ const CurrentSolve = ({ store }: {
   store: Store
 }) => {
   const solve = store.solve;
+  const scramble = store.scramble;
   const status = store.status;
-  const onClickRefresh = store.requestNewSolve;
+  const onClickRefresh = store.requestNewScramble;
   const startInspecting = store.requestStartInspecting;
   const startSolving = store.requestStartSolving;
   const stopSolving = store.requestStopSolving;
@@ -19,6 +20,7 @@ const CurrentSolve = ({ store }: {
   return (
     <Component
       solve={solve}
+      scramble={scramble}
       status={status}
       onClickRefresh={onClickRefresh}
       startInspecting={startInspecting}
