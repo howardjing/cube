@@ -8,13 +8,17 @@ import { List } from 'immutable';
 import type Database, { Solve as SolveJson } from '../database';
 import Solve from './solve';
 import type { Move } from './solve';
-import scramble from './scramble';
+import _scramble from './scramble';
 
 type Status = 'idle' | 'inspecting' | 'solving';
 
+function scramble(): List<Move> {
+  return List(_scramble());
+}
+
 const observables = {
   solves: List(),
-  scramble: List(scramble()),
+  scramble: scramble(),
   solve: Solve.build(),
   status: 'idle',
 };
@@ -57,7 +61,7 @@ class Store {
   });
 
   requestNewScramble = action(() => {
-    this.scramble = List(scramble());
+    this.scramble = scramble();
   });
 
   requestNewSolve = action(() => {
@@ -69,27 +73,30 @@ class Store {
     this.status = 'inspecting';
   });
 
-  setInspectionTime = () => {
-    this.solve = this.solve.setInspectionTime(
+  tickInspection = () => {
+    return this.solve.setInspectionTime(
       Date.now() - this.solve.start
     );
   }
 
   requestStartSolving = action(() => {
-    this.setInspectionTime();
+    this.solve = this.tickInspection();
     this.status = 'solving';
   });
 
   requestStopSolving = action(() => {
-    this.setSolveTime();
+    this.solve = this
+      .tickSolve()
+      .setScramble(this.scramble);
+    this.scramble = scramble();
     this.status = 'idle';
   });
 
   /**
    * @private
    */
-  setSolveTime = () => {
-    this.solve = this.solve.setSolveTime(
+  tickSolve = () => {
+    return this.solve.setSolveTime(
       Date.now() - (
         this.solve.start +
         this.solve.inspectionTime
@@ -97,8 +104,12 @@ class Store {
     );
   };
 
-  requestTickInspection = action(this.setInspectionTime);
-  requestTickSolve = action(this.setSolveTime);
+  requestTickInspection = action(() => {
+    this.solve = this.tickInspection();
+  });
+  requestTickSolve = action(() => {
+    this.solve = this.tickSolve();
+  });
 }
 
 export default Store;
