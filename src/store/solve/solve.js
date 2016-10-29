@@ -20,6 +20,10 @@ class Solve extends Record({
     return new Solve();
   }
 
+  setId(id: number): Solve {
+    return this.set('id', id);
+  }
+
   setScramble(scramble: List<Move>): Solve {
     return this.set('scramble', scramble);
   }
@@ -35,6 +39,8 @@ class Solve extends Record({
   setSolveTime(millis: number): Solve {
     return this.set('solveTime', millis);
   }
+
+
 }
 
 export default Solve;

@@ -16,6 +16,12 @@ function scramble(): List<Move> {
   return List(_scramble());
 }
 
+function serialize(solve: Solve): any {
+  const json = solve.toJS();
+  delete json.id;
+  return json;
+}
+
 const observables = {
   solves: List(),
   scramble: scramble(),
@@ -43,16 +49,16 @@ class Store {
     extendObservable(this, observables);
   }
 
-  _requestSolves = (): Promise<Solve[]> => {
+  _requestSolves = (): Promise<List<Solve>> => {
     return this.db.requestSolves()
       .then((solves) => {
-        return solves.map((json) =>
+        return List(solves).map((json) =>
           Solve.fromJson(json)
         );
       });
   }
 
-  requestSolves = action((): Promise<Solve[]> => {
+  requestSolves = action((): Promise<List<Solve>> => {
     return this._requestSolves()
       .then(action((solves) => {
         this.solves = solves;
@@ -88,8 +94,15 @@ class Store {
     this.solve = this
       .tickSolve()
       .setScramble(this.scramble);
-    this.scramble = scramble();
-    this.status = 'idle';
+
+    this.db.createSolve(serialize(this.solve))
+      .then(action((id) => {
+        this.solves = this.solves.unshift(
+          this.solve.setId(id)
+        );
+        this.scramble = scramble();
+        this.status = 'idle';
+      }));
   });
 
   /**

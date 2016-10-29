@@ -26,6 +26,10 @@ class Database {
       .reverse()
       .toArray();
   }
+
+  createSolve = (solve: Solve): Promise<number> => {
+    return this.db.solves.add(solve);
+  }
 }
 
 export default Database;
