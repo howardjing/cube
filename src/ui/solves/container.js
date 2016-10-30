@@ -7,9 +7,12 @@ import Store from '../../store';
 const Solves = ({ store }: {
   store: Store
 }) => {
+  const solves = store.solves;
+  const deleteSolve = store.requestDeleteSolve;
   return (
     <Component
-      solves={store.solves}
+      solves={solves}
+      deleteSolve={deleteSolve}
     />
   );
 };

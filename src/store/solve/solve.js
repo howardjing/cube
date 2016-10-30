@@ -20,6 +20,10 @@ class Solve extends Record({
     return new Solve();
   }
 
+  getId(): ?number {
+    return this.get('id');
+  }
+
   setId(id: number): Solve {
     return this.set('id', id);
   }
@@ -34,6 +38,10 @@ class Solve extends Record({
 
   setInspectionTime(millis: number): Solve {
     return this.set('inspectionTime', millis);
+  }
+
+  getSolveTime(): ?number {
+    return this.get('solveTime');
   }
 
   setSolveTime(millis: number): Solve {

@@ -120,8 +120,18 @@ class Store {
   requestTickInspection = action(() => {
     this.solve = this.tickInspection();
   });
+
   requestTickSolve = action(() => {
     this.solve = this.tickSolve();
+  });
+
+  requestDeleteSolve = action((id: ?number) => {
+    if (!id) { return; }
+
+    this.db.deleteSolve(id);
+    this.solves = this.solves.filterNot((solve) => {
+      return solve.getId() === id;
+    });
   });
 }
 

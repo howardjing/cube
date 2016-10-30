@@ -1,17 +1,56 @@
 // @flow
-import React from 'react';
+import React, { Component } from 'react';
+import { css } from 'aphrodisiac';
 import type { List } from 'immutable';
 import Solve from '../../store/solve';
 import SolveTime from '../_common/solve-time';
+import styles from './styles';
+
+const DisplaySolve = class extends Component {
+  props: {
+    solve: Solve,
+    deleteSolve: () => void,
+  };
+
+  deleteSolve = () => {
+    const { solve, deleteSolve } = this.props;
+    const id = solve.getId();
+    deleteSolve(id);
+  };
+
+  render() {
+    const { solve } = this.props;
+    const solveTime = solve.getSolveTime();
+    return (
+      <div>
+        <SolveTime
+          className={css(styles.solveTime)}
+          time={solveTime}
+        />
+        <span
+          className={css(styles.deleteIcon)}
+          onClick={this.deleteSolve}
+        >
+          &nbsp;❌
+        </span>
+      </div>
+    )
+  }
+}
 
 const Solves = ({
   solves,
+  deleteSolve,
 }: {
-  solves: List<Solve>
+  solves: List<Solve>,
+  deleteSolve: () => void,
 }) => {
   const recent = solves.slice(0, 12).map((solve) => (
     <li key={solve.id}>
-      <SolveTime time={solve.solveTime} />
+      <DisplaySolve
+        solve={solve}
+        deleteSolve={deleteSolve}
+      />
     </li>
   ));
 

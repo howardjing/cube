@@ -30,6 +30,13 @@ class Database {
   createSolve = (solve: Solve): Promise<number> => {
     return this.db.solves.add(solve);
   }
+
+  deleteSolve = (id: number): Promise<number> => {
+    return this.db.solves.delete(id)
+      .then(() => {
+        return id;
+      });
+  }
 }
 
 export default Database;

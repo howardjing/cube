@@ -9,7 +9,7 @@ const Trend = ({ store }: {
 }) => {
   return (
     <Component
-      solves={store.solves}
+      solves={store.solves.slice(0, 200)}
     />
   );
 };
