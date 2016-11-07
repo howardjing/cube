@@ -6,6 +6,7 @@ import type { Status, Move } from '../../store';
 import Solve from '../../store/solve';
 import SolveTime from '../_common/solve-time';
 import styles from './styles';
+import Cube from './cube';
 
 type Props = {
   solve: Solve,
@@ -162,6 +163,7 @@ class CurrentSolve extends Component {
             solve={solve}
           />
           <Message status={status} />
+          <Cube />
         </div>
         <div />
       </div>

@@ -2126,6 +2126,18 @@ fbjs@^0.8.4:
     promise "^7.1.1"
     ua-parser-js "^0.7.9"
 
+fbjs@0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.4.tgz#875ce3582af9525520bdb9dc5f61e951fa4046f1"
+  dependencies:
+    core-js "^1.0.0"
+    immutable "^3.7.6"
+    isomorphic-fetch "^2.1.1"
+    loose-envify "^1.0.0"
+    object-assign "^4.1.0"
+    promise "^7.1.1"
+    ua-parser-js "^0.7.9"
+
 figures@^1.3.5:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/figures/-/figures-1.7.0.tgz#cbe1e3affcf1cd44b80cadfed28dc793a9701d2e"
@@ -4491,6 +4503,12 @@ react-scripts@0.7.0:
   optionalDependencies:
     fsevents "1.0.14"
 
+react-three-renderer:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/react-three-renderer/-/react-three-renderer-2.3.3.tgz#becde541387b3de345476695b3e0aa80f57e6b8f"
+  dependencies:
+    fbjs "0.8.4"
+
 react-vis:
   version "0.6.4"
   resolved "https://registry.yarnpkg.com/react-vis/-/react-vis-0.6.4.tgz#c16e2d8a04fbd854654682bd7f3850aeb8fc5a92"
@@ -5142,6 +5160,10 @@ testcheck@^0.1.0:
 text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
+
+three@0.79.0:
+  version "0.79.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.79.0.tgz#3af96fda47f68b7ab093c298dfa335fa45da0cf4"
 
 throat@^3.0.0:
   version "3.0.0"
