@@ -14,7 +14,7 @@ import {
 /**
  * returns positions for each piece in a cube
  */
-const buildCubePositions = (sides: number): Array<Vector3> => {
+const buildCubePositions = (sides: number): Vector3[] => {
   const pieces = [];
 
   /**
@@ -45,50 +45,241 @@ const buildCubePositions = (sides: number): Array<Vector3> => {
   return pieces;
 }
 
-// standard cube, white up, green facing
-const buildColors = () => {
+const gray = 0x999999;
+const red = 0xff0000;
+const orange = 0xff8000;
+const white = 0xffffff;
+const yellow = 0xffff00;
+const green = 0x00ff00;
+const blue = 0x0000ff;
+
+type CubeColor = number[];
+
+const buildCubeColor = ({
+  right = gray,
+  left = gray,
+  up = gray,
+  down = gray,
+  front = gray,
+  back = gray,
+}: {
+  right?: number,
+  left?: number,
+  up?: number,
+  down?: number,
+  front?: number,
+  back?: number,
+} = {}): CubeColor => {
   return [
-    // right
-    // red
-    0xff0000,
-    0xff0000,
+    right,
+    right,
 
-    // left
-    // orange
-    0xff8000,
-    0xff8000,
+    left,
+    left,
 
-    // top
-    // white
-    0xffffff,
-    0xffffff,
+    up,
+    up,
 
-    // bottom
-    // yellow
-    0xffff00,
-    0xffff00,
+    down,
+    down,
 
-    // front
-    // green
-    0x00ff00,
-    0x00ff00,
+    front,
+    front,
 
-    // back
-    // blue
-    0x0000ff,
-    0x0000ff,
-  ];
+    back,
+    back,
+  ]
+};
+
+const filler = buildCubeColor();
+
+// standard cube, white up, green facing
+const CUBE_COLORS = [
+  // far bottom left corner
+  buildCubeColor({
+    down: yellow,
+    left: orange,
+    back: blue,
+  }),
+
+  // middle bottom left edge
+  buildCubeColor({
+    down: yellow,
+    left: orange,
+  }),
+
+  // near bottom left corner
+  buildCubeColor({
+    down: yellow,
+    left: orange,
+    front: green,
+  }),
+
+  // far middle left edge
+  buildCubeColor({
+    left: orange,
+    back: blue,
+  }),
+
+  // left center
+  buildCubeColor({
+    left: orange,
+  }),
+
+  // near middle left edge
+  buildCubeColor({
+    left: orange,
+    front: green,
+  }),
+
+  // far top left corner
+  buildCubeColor({
+    up: white,
+    left: orange,
+    back: blue,
+  }),
+
+  // middle top left edge
+  buildCubeColor({
+    up: white,
+    left: orange,
+  }),
+
+  // near top left corner
+  buildCubeColor({
+    up: white,
+    left: orange,
+    front: green,
+  }),
+
+  // far bottom edge
+  buildCubeColor({
+    down: yellow,
+    back: blue,
+  }),
+
+  // bottom middle center
+  buildCubeColor({
+    down: yellow,
+  }),
+
+  // near bottom edge
+  buildCubeColor({
+    down: yellow,
+    front: green,
+  }),
+
+  // far center
+  buildCubeColor({
+    back: blue,
+  }),
+
+  // core
+  filler,
+
+  // near center
+  buildCubeColor({
+    front: green
+  }),
+
+  // far top edge
+  buildCubeColor({
+    up: white,
+    back: blue,
+  }),
+
+  // top center
+  buildCubeColor({
+    up: white,
+  }),
+
+  // near top edge
+  buildCubeColor({
+    up: white,
+    front: green,
+  }),
+
+  // far bottom right corner
+  buildCubeColor({
+    down: yellow,
+    right: red,
+    back: blue,
+  }),
+
+  // bottom right edge
+  buildCubeColor({
+    down: yellow,
+    right: red,
+  }),
+
+  // near bottom right corner
+  buildCubeColor({
+    down: yellow,
+    right: red,
+    front: green,
+  }),
+
+  // far right edge
+  buildCubeColor({
+    right: red,
+    back: blue,
+  }),
+
+  // right center
+  buildCubeColor({
+    right: red,
+  }),
+
+  // near right edge
+  buildCubeColor({
+    right: red,
+    front: green,
+  }),
+
+  // far top right corner
+  buildCubeColor({
+    up: white,
+    right: red,
+    back: blue,
+  }),
+
+  // top right edge
+  buildCubeColor({
+    up: white,
+    right: red,
+  }),
+
+  // near top right corner
+  buildCubeColor({
+    up: white,
+    right: red,
+    front: green,
+  }),
+];
+
+
+const cubeColorsAt = (index: number, colors: CubeColor[] = CUBE_COLORS): CubeColor => {
+  return colors[index] || filler;
 }
 
-const buildBox = (position: Vector3, colors: Array<number>): Mesh => {
+const buildColors = () => buildCubeColor({
+  up: white,
+  down: yellow,
+  left: orange,
+  right: red,
+  front: green,
+  back: blue,
+});
+
+const buildBox = (position: Vector3, color: CubeColor): Mesh => {
   const geometry = new BoxGeometry(1,1,1);
 
-  const n = Math.min(colors.length, geometry.faces.length);
+  const n = Math.min(color.length, geometry.faces.length);
   for (let i=0; i<n; i++) {
     const face = geometry.faces[i];
-    const color = colors[i];
+    const faceColor = color[i];
 
-    face.color.setHex(color);
+    face.color.setHex(faceColor);
   }
 
   const material = new MeshBasicMaterial({
@@ -134,8 +325,8 @@ class Cube {
 
     this.cube = new Object3D();
 
-    buildCubePositions(sides).forEach((position) => {
-      this.cube.add(buildBox(position, buildColors()))
+    buildCubePositions(sides).forEach((position, i) => {
+      this.cube.add(buildBox(position, cubeColorsAt(i)))
     });
 
     this.scene = new Scene();
