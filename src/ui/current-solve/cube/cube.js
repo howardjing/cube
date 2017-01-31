@@ -257,6 +257,13 @@ const CUBE_COLORS = [
   }),
 ];
 
+const duplicateColors = (colors: CubeColor[]): CubeColor[] => {
+  return colors.map(color => color.slice(0));
+};
+
+const front = (colors: CubeColor[]): CubeColor[] => {
+  return duplicateColors(colors);
+}
 
 const cubeColorsAt = (index: number, colors: CubeColor[] = CUBE_COLORS): CubeColor => {
   return colors[index] || filler;
@@ -326,7 +333,7 @@ class Cube {
     this.cube = new Object3D();
 
     buildCubePositions(sides).forEach((position, i) => {
-      this.cube.add(buildBox(position, cubeColorsAt(i)))
+      this.cube.add(buildBox(position, cubeColorsAt(i, front(CUBE_COLORS))))
     });
 
     this.scene = new Scene();
@@ -341,9 +348,10 @@ class Cube {
       cube,
     } = this;
 
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    // cube.rotation.x += 0.01;
+    // cube.rotation.y += 0.01;
     renderer.render(scene, camera);
+    cube.rotation.y = Math.PI / 4;
   }
 
   getDomElement = () => (

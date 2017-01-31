@@ -3,26 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.7.0"
+    "npm-check": "^5.4.0",
+    "react-scripts": "^0.8.5"
   },
   "dependencies": {
-    "aphrodisiac": "^0.3.0",
+    "aphrodisiac": "^1.0.0",
     "dexie": "^v2.0.0-beta.3",
-    "flow-bin": "^0.33.0",
-    "lodash": "^4.16.4",
+    "flow-bin": "^0.38.0",
+    "immutable": "^3.8.1",
+    "lodash": "^4.17.4",
     "mobx": "^2.6.0",
     "mobx-react": "^3.5.8",
-    "react": "^15.3.2",
-    "react-addons-shallow-compare": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "react-vis": "^0.6.4",
-    "three": "^0.82.1"
+    "react": "^15.4.2",
+    "react-addons-shallow-compare": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-vis": "^0.10.3",
+    "three": "^0.84.0"
   },
   "scripts": {
     "start": "PORT=7777 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "flow": "./node_modules/.bin/flow"
+    "flow": "./node_modules/.bin/flow",
+    "update-dependencies": "yarn npm-check -- -u"
   }
 }
