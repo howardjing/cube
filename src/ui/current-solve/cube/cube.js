@@ -9,6 +9,7 @@ import {
   FaceColors,
   Object3D,
   Vector3,
+  SceneUtils,
 } from 'three';
 
 /**
@@ -308,6 +309,9 @@ class Cube {
   scene: Scene;
   camera: PerspectiveCamera;
   cube: Object3D;
+  isRotating: boolean;
+  pivot: Object3D;
+  activeGroup: Object3D[];
 
   /**
    * width in pixels
@@ -336,8 +340,86 @@ class Cube {
       this.cube.add(buildBox(position, cubeColorsAt(i, front(CUBE_COLORS))))
     });
 
+    // rotate cube a little
+    // this.cube.rotation.y = Math.PI / 4;
+
     this.scene = new Scene();
     this.scene.add(this.cube);
+
+    // rotation stuff, see
+    // https://github.com/jwhitfieldseed/rubik-js/blob/master/rubik.js#L261
+    this.pivot = new Object3D();
+    this.isRotating = false;
+    this.activeGroup = [];
+
+    /**
+     * returns [start, end) in increments of increment
+     *
+     * start must be less than end; increment must be greater than 0
+     */
+    const range = (start: number, limit: number, increment: number = 1): number[] => {
+      const xs = [];
+      for (let i=start; i < limit; i += increment) {
+        xs.push(i);
+      }
+
+      return xs;
+    }
+
+    // const LEFT_INDICES = range(0, 9);
+    // LEFT_INDICES.forEach((i) => {
+    //   this.activeGroup.push(this.cube.children[i]);
+    // });
+
+    // const RIGHT_INDICES = range(18,27);
+    // RIGHT_INDICES.forEach((i) => {
+    //   this.activeGroup.push(this.cube.children[i]);
+    // });
+
+    // const BACK_INDICES = range(0, 27, 3);
+    // BACK_INDICES.forEach((i) => {
+    //   this.activeGroup.push(this.cube.children[i]);
+    // });
+
+    // const FRONT_INDICES = range(2, 27, 3);
+    // FRONT_INDICES.forEach((i) => {
+    //   this.activeGroup.push(this.cube.children[i]);
+    // });
+
+    // const UP_INDICES = range(0, 3).concat(range(9, 12)).concat(range(18, 21));
+    // UP_INDICES.forEach((i) => {
+    //   this.activeGroup.push(this.cube.children[i]);
+    // });
+
+    const BACK_INDICES = range(6,9).concat(range(15, 18)).concat(range(24,27));
+    BACK_INDICES.forEach((i) => {
+      this.activeGroup.push(this.cube.children[i]);
+    });
+
+    setTimeout(() => {
+      console.log("ROTATING")
+      this.isRotating = true;
+
+      this.pivot.rotation.set(0,0,0);
+      this.pivot.updateMatrixWorld();
+
+      this.activeGroup.forEach((active) => {
+        SceneUtils.attach(active, this.scene, this.pivot);
+      });
+
+      this.scene.add(this.pivot);
+    }, 1000)
+
+    setTimeout(() => {
+      // console.log("STOP ROTATING")
+      // this.isRotating = false;
+
+      // this.pivot.updateMatrixWorld();
+      // this.activeGroup.forEach((active) => {
+      //   SceneUtils.detach(active, this.pivot, this.scene);
+      // });
+      // this.scene.remove(this.pivot);
+    }, 3000)
   }
 
   animate = () => {
@@ -348,10 +430,17 @@ class Cube {
       cube,
     } = this;
 
+    // LEFT / RIGHT
+    // this.pivot.rotation.x += 0.01;
+
+    // FRONT / BACK
+    // this.pivot.rotation.z += 0.01;
+
+    // UP / DOWN
+    this.pivot.rotation.y += 0.01;
     // cube.rotation.x += 0.01;
     // cube.rotation.y += 0.01;
     renderer.render(scene, camera);
-    cube.rotation.y = Math.PI / 4;
   }
 
   getDomElement = () => (
