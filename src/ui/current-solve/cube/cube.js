@@ -54,6 +54,9 @@ const yellow = 0xffff00;
 const green = 0x00ff00;
 const blue = 0x0000ff;
 
+const NINETY_DEGREES = Math.PI / 2;
+const INCREMENT = 1 / (30 * Math.PI);
+
 type CubeColor = number[];
 
 const buildCubeColor = ({
@@ -408,18 +411,7 @@ class Cube {
       });
 
       this.scene.add(this.pivot);
-    }, 1000)
-
-    setTimeout(() => {
-      // console.log("STOP ROTATING")
-      // this.isRotating = false;
-
-      // this.pivot.updateMatrixWorld();
-      // this.activeGroup.forEach((active) => {
-      //   SceneUtils.detach(active, this.pivot, this.scene);
-      // });
-      // this.scene.remove(this.pivot);
-    }, 3000)
+    }, 1000);
   }
 
   animate = () => {
@@ -437,7 +429,12 @@ class Cube {
     // this.pivot.rotation.z += 0.01;
 
     // UP / DOWN
-    this.pivot.rotation.y += 0.01;
+    if (this.isRotating) {
+      this.pivot.rotation.y += INCREMENT;
+      if (this.pivot.rotation.y > NINETY_DEGREES) {
+        this.isRotating = false;
+      }
+    }
     // cube.rotation.x += 0.01;
     // cube.rotation.y += 0.01;
     renderer.render(scene, camera);
