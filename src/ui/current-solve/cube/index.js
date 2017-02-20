@@ -21,8 +21,8 @@ const Cube = class extends Component {
     }
   }
 
-  animate = () => {
-    this.cube.animate();
+  animate = (time: number) => {
+    this.cube.animate(time);
     this.animationId = window.requestAnimationFrame(this.animate);
   }
 
@@ -35,7 +35,7 @@ const Cube = class extends Component {
 
 
     el.appendChild(cube.getDomElement());
-    this.animate();
+    this.animate(performance.now());
   }
 
   render() {

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "aphrodisiac": "^1.0.0",
+    "bezier-easing": "^2.0.3",
     "dexie": "^v2.0.0-beta.3",
     "flow-bin": "^0.38.0",
     "immutable": "^3.8.1",

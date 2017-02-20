@@ -12,6 +12,10 @@ import {
   SceneUtils,
 } from 'three';
 
+import BezierEasing from 'bezier-easing';
+
+const ease = BezierEasing(0.25, 0.1, 0.25, 1) // ease function
+
 /**
  * returns positions for each piece in a cube
  */
@@ -54,6 +58,7 @@ const yellow = 0xffff00;
 const green = 0x00ff00;
 const blue = 0x0000ff;
 
+const TURN_DURATION = 500;
 const NINETY_DEGREES = Math.PI / 2;
 const INCREMENT = 1 / (30 * Math.PI);
 
@@ -312,7 +317,7 @@ class Cube {
   scene: Scene;
   camera: PerspectiveCamera;
   cube: Object3D;
-  isRotating: boolean;
+  turnStart: ?number;
   pivot: Object3D;
   activeGroup: Object3D[];
 
@@ -343,16 +348,13 @@ class Cube {
       this.cube.add(buildBox(position, cubeColorsAt(i, front(CUBE_COLORS))))
     });
 
-    // rotate cube a little
-    // this.cube.rotation.y = Math.PI / 4;
-
     this.scene = new Scene();
     this.scene.add(this.cube);
 
     // rotation stuff, see
     // https://github.com/jwhitfieldseed/rubik-js/blob/master/rubik.js#L261
     this.pivot = new Object3D();
-    this.isRotating = false;
+    this.scene.add(this.pivot);
     this.activeGroup = [];
 
     /**
@@ -401,8 +403,8 @@ class Cube {
 
     setTimeout(() => {
       console.log("ROTATING")
-      this.isRotating = true;
 
+      this.turnStart = performance.now();
       this.pivot.rotation.set(0,0,0);
       this.pivot.updateMatrixWorld();
 
@@ -410,11 +412,11 @@ class Cube {
         SceneUtils.attach(active, this.scene, this.pivot);
       });
 
-      this.scene.add(this.pivot);
     }, 1000);
   }
 
-  animate = () => {
+
+  animate = (time: number) => {
     const {
       renderer,
       scene,
@@ -429,10 +431,13 @@ class Cube {
     // this.pivot.rotation.z += 0.01;
 
     // UP / DOWN
-    if (this.isRotating) {
-      this.pivot.rotation.y += INCREMENT;
-      if (this.pivot.rotation.y > NINETY_DEGREES) {
-        this.isRotating = false;
+    if (this.turnStart) {
+      const elapsedTime = time - this.turnStart;
+      const percentComplete = ease(elapsedTime / TURN_DURATION);
+
+      this.pivot.rotation.y = NINETY_DEGREES * percentComplete;
+      if (elapsedTime >= TURN_DURATION) {
+        this.turnStart = null;
       }
     }
     // cube.rotation.x += 0.01;
