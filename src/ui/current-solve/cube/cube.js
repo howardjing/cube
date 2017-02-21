@@ -14,7 +14,15 @@ import {
 
 import BezierEasing from 'bezier-easing';
 
+import type { Move } from '../../../store/scramble';
+
 const ease = BezierEasing(0.25, 0.1, 0.25, 1) // ease function
+
+const delay = (millis: number) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), millis);
+  });
+};
 
 /**
  * returns positions for each piece in a cube
@@ -310,16 +318,40 @@ const buildBox = (position: Vector3, color: CubeColor): Mesh => {
   return mesh;
 }
 
+/**
+ * returns [start, end) in increments of increment
+ *
+ * start must be less than end; increment must be greater than 0
+ */
+const range = (start: number, limit: number, increment: number = 1): number[] => {
+  const xs = [];
+  for (let i=start; i < limit; i += increment) {
+    xs.push(i);
+  }
+
+  return xs;
+}
+
+const LEFT_INDICES = range(0, 9);
+const RIGHT_INDICES = range(18,27);
+const BACK_INDICES = range(0, 27, 3);
+const FRONT_INDICES = range(2, 27, 3);
+const UP_INDICES = range(6,9).concat(range(15, 18)).concat(range(24,27));
+const DOWN_INDICES = range(0, 3).concat(range(9, 12)).concat(range(18, 21));
+
 class Cube {
   width: number;
   height: number;
   renderer: WebGLRenderer;
   scene: Scene;
   camera: PerspectiveCamera;
-  cube: Object3D;
+  // parent cube that holds children cubes
+  cubeContainer: Object3D;
+  cubes: Object3D[];
   turnStart: ?number;
   pivot: Object3D;
-  activeGroup: Object3D[];
+  animateTurn: (percent: number) => void;
+  finishAnimatingTurn: () => void;
 
   /**
    * width in pixels
@@ -342,77 +374,108 @@ class Cube {
     this.camera = new PerspectiveCamera(75, width / height, 0.1, 1000);
     this.camera.position.z = 10;
 
-    this.cube = new Object3D();
+    this.cubeContainer = new Object3D();
+    this.cubes = buildCubePositions(sides).map((position, i) =>
+      // TODO: don't remember the meaning behind name `front`...
+      // why not just do `cubeColorsAt(i)`?
+      buildBox(position, cubeColorsAt(i, front(CUBE_COLORS)))
+    );
 
-    buildCubePositions(sides).forEach((position, i) => {
-      this.cube.add(buildBox(position, cubeColorsAt(i, front(CUBE_COLORS))))
+    this.cubes.forEach((cube) => {
+      this.cubeContainer.add(cube)
     });
 
     this.scene = new Scene();
-    this.scene.add(this.cube);
+    this.scene.add(this.cubeContainer);
 
     // rotation stuff, see
     // https://github.com/jwhitfieldseed/rubik-js/blob/master/rubik.js#L261
     this.pivot = new Object3D();
-    this.scene.add(this.pivot);
-    this.activeGroup = [];
-
-    /**
-     * returns [start, end) in increments of increment
-     *
-     * start must be less than end; increment must be greater than 0
-     */
-    const range = (start: number, limit: number, increment: number = 1): number[] => {
-      const xs = [];
-      for (let i=start; i < limit; i += increment) {
-        xs.push(i);
-      }
-
-      return xs;
-    }
-
-    // const LEFT_INDICES = range(0, 9);
-    // LEFT_INDICES.forEach((i) => {
-    //   this.activeGroup.push(this.cube.children[i]);
-    // });
-
-    // const RIGHT_INDICES = range(18,27);
-    // RIGHT_INDICES.forEach((i) => {
-    //   this.activeGroup.push(this.cube.children[i]);
-    // });
-
-    // const BACK_INDICES = range(0, 27, 3);
-    // BACK_INDICES.forEach((i) => {
-    //   this.activeGroup.push(this.cube.children[i]);
-    // });
-
-    // const FRONT_INDICES = range(2, 27, 3);
-    // FRONT_INDICES.forEach((i) => {
-    //   this.activeGroup.push(this.cube.children[i]);
-    // });
-
-    // const UP_INDICES = range(0, 3).concat(range(9, 12)).concat(range(18, 21));
-    // UP_INDICES.forEach((i) => {
-    //   this.activeGroup.push(this.cube.children[i]);
-    // });
-
-    const BACK_INDICES = range(6,9).concat(range(15, 18)).concat(range(24,27));
-    BACK_INDICES.forEach((i) => {
-      this.activeGroup.push(this.cube.children[i]);
-    });
+    this.animateTurn = () => {};
+    this.finishAnimatingTurn = () => {};
 
     setTimeout(() => {
-      console.log("ROTATING")
-
-      this.turnStart = performance.now();
-      this.pivot.rotation.set(0,0,0);
-      this.pivot.updateMatrixWorld();
-
-      this.activeGroup.forEach((active) => {
-        SceneUtils.attach(active, this.scene, this.pivot);
-      });
-
+      this
+        .turn('U')
+        .then(() => delay(1000))
+        .then(() => this.turn('F'))
+        .then(() => delay(1000))
+        .then(() => this.turn('D'))
+        .then(() => delay(1000))
+        .then(() => this.turn('B'))
+        .then(() => delay(1000))
+        .then(() => this.turn('L'))
+        .then(() => delay(1000))
+        .then(() => this.turn('R'))
     }, 1000);
+  }
+
+  turn = (move: Move): Promise<void> => {
+    console.log("this cube", this.cubeContainer)
+    this.pivot = new Object3D();
+    let activeCubes = [];
+    let animateTurn = () => {};
+    if (move.startsWith('F')) {
+      activeCubes = FRONT_INDICES;
+      animateTurn = (percent: number): void => {
+        this.pivot.rotation.z = NINETY_DEGREES * percent;
+      }
+    } else if (move.startsWith('B')) {
+      activeCubes = BACK_INDICES;
+      animateTurn = (percent: number): void => {
+        this.pivot.rotation.z = NINETY_DEGREES * percent;
+      }
+    } else if (move.startsWith('U')) {
+      activeCubes = UP_INDICES;
+      animateTurn = (percent: number): void => {
+        this.pivot.rotation.y = NINETY_DEGREES * percent;
+      }
+    } else if (move.startsWith('D')) {
+      activeCubes = DOWN_INDICES;
+      animateTurn = (percent: number): void => {
+        this.pivot.rotation.y = NINETY_DEGREES * percent;
+      }
+    } else if (move.startsWith('L')) {
+      activeCubes = LEFT_INDICES;
+      animateTurn = (percent: number): void => {
+        this.pivot.rotation.x = NINETY_DEGREES * percent;
+      }
+    } else if (move.startsWith('R')) {
+      activeCubes = RIGHT_INDICES;
+      animateTurn = (percent: number): void => {
+        this.pivot.rotation.x = NINETY_DEGREES * percent;
+      }
+    } else {
+      throw new Error(`Unsupported move: ${move}`);
+    }
+
+    const activeGroup = activeCubes.map((i) =>
+      this.cubes[i]
+    );
+
+    this.animateTurn = animateTurn;
+    this.turnStart = performance.now();
+
+    activeGroup.forEach((active) => {
+      SceneUtils.attach(active, this.scene, this.pivot);
+    });
+
+    this.pivot.rotation.set(0,0,0);
+    this.pivot.updateMatrixWorld();
+    this.scene.add(this.pivot);
+
+    return new Promise((resolve) => {
+      this.finishAnimatingTurn = resolve;
+    }).then(() => {
+      this.pivot.updateMatrixWorld();
+      this.scene.remove(this.pivot);
+      this.turnStart = null;
+      activeGroup.forEach((active) => {
+        active.updateMatrixWorld();
+        SceneUtils.detach(active, this.pivot, this.scene);
+        this.cubeContainer.add(active);
+      });
+    })
   }
 
 
@@ -421,25 +484,20 @@ class Cube {
       renderer,
       scene,
       camera,
-      cube,
+      // cube,
     } = this;
 
-    // LEFT / RIGHT
-    // this.pivot.rotation.x += 0.01;
 
-    // FRONT / BACK
-    // this.pivot.rotation.z += 0.01;
-
-    // UP / DOWN
     if (this.turnStart) {
       const elapsedTime = time - this.turnStart;
       const percentComplete = ease(elapsedTime / TURN_DURATION);
+      this.animateTurn(percentComplete);
 
-      this.pivot.rotation.y = NINETY_DEGREES * percentComplete;
       if (elapsedTime >= TURN_DURATION) {
-        this.turnStart = null;
+        this.finishAnimatingTurn();
       }
     }
+
     // cube.rotation.x += 0.01;
     // cube.rotation.y += 0.01;
     renderer.render(scene, camera);
