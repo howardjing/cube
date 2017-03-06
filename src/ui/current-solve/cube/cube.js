@@ -396,29 +396,28 @@ class Cube {
 
     setTimeout(() => {
       this
-        .turn('U')
-        .then(() => delay(1000))
-        .then(() => this.turn('F'))
-        .then(() => delay(1000))
-        .then(() => this.turn('D'))
-        .then(() => delay(1000))
-        .then(() => this.turn('B'))
-        .then(() => delay(1000))
+        .turn('R')
+        .then(() => delay(250))
+        .then(() => this.turn('U'))
+        .then(() => delay(250))
         .then(() => this.turn('L'))
-        .then(() => delay(1000))
-        .then(() => this.turn('R'))
+        .then(() => delay(250))
+        .then(() => this.turn('B'))
+        .then(() => delay(250))
+        .then(() => this.turn('D'))
+        .then(() => delay(250))
+        .then(() => this.turn('F'))
     }, 1000);
   }
 
   turn = (move: Move): Promise<void> => {
-    console.log("this cube", this.cubeContainer)
     this.pivot = new Object3D();
     let activeCubes = [];
     let animateTurn = () => {};
     if (move.startsWith('F')) {
       activeCubes = FRONT_INDICES;
       animateTurn = (percent: number): void => {
-        this.pivot.rotation.z = NINETY_DEGREES * percent;
+        this.pivot.rotation.z = -NINETY_DEGREES * percent;
       }
     } else if (move.startsWith('B')) {
       activeCubes = BACK_INDICES;
@@ -428,7 +427,7 @@ class Cube {
     } else if (move.startsWith('U')) {
       activeCubes = UP_INDICES;
       animateTurn = (percent: number): void => {
-        this.pivot.rotation.y = NINETY_DEGREES * percent;
+        this.pivot.rotation.y = -NINETY_DEGREES * percent;
       }
     } else if (move.startsWith('D')) {
       activeCubes = DOWN_INDICES;
@@ -443,7 +442,7 @@ class Cube {
     } else if (move.startsWith('R')) {
       activeCubes = RIGHT_INDICES;
       animateTurn = (percent: number): void => {
-        this.pivot.rotation.x = NINETY_DEGREES * percent;
+        this.pivot.rotation.x = -NINETY_DEGREES * percent;
       }
     } else {
       throw new Error(`Unsupported move: ${move}`);
@@ -474,8 +473,52 @@ class Cube {
         active.updateMatrixWorld();
         SceneUtils.detach(active, this.pivot, this.scene);
         this.cubeContainer.add(active);
+
+        // reorder cube with the updated position
+      if (move.startsWith('F')) {
+        this.cycle(2,8,26,20);
+        this.cycle(5,16,23,11);
+      } else if (move.startsWith('B')) {
+        this.cycle(0,18,24,6)
+        this.cycle(3,9,21,15)
+      } else if (move.startsWith('U')) {
+        this.cycle(6,24,26,8);
+        this.cycle(7,15,25,17);
+      } else if (move.startsWith('D')) {
+        this.cycle(0,2,20,18);
+        this.cycle(1,11,19,9);
+      } else if (move.startsWith('L')) {
+        this.cycle(0,6,8,2);
+        this.cycle(1,3,7,5)
+      } else if (move.startsWith('R')) {
+        this.cycle(18,20,26,24);
+        this.cycle(19,23,25,21);
+      } else {
+        throw new Error(`Unsupported move: ${move}`);
+      }
       });
     })
+  }
+
+  /**
+   * cycle cubes after a turn.
+   *
+   * a -> b
+   * b -> c
+   * c -> d
+   * d -> a
+   */
+  cycle = (i: number, j: number, k: number, l: number): void => {
+    const cubes = this.cubes;
+    const a = cubes[i];
+    const b = cubes[j];
+    const c = cubes[k];
+    const d = cubes[l];
+
+    cubes[j] = a;
+    cubes[k] = b;
+    cubes[l] = c;
+    cubes[i] = d;
   }
 
 
