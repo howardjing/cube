@@ -68,6 +68,7 @@ const blue = 0x0000ff;
 
 const TURN_DURATION = 500;
 const NINETY_DEGREES = Math.PI / 2;
+const ONE_EIGHTY_DEGREES = Math.PI;
 const INCREMENT = 1 / (30 * Math.PI);
 
 type CubeColor = number[];
@@ -395,18 +396,14 @@ class Cube {
     this.finishAnimatingTurn = () => {};
 
     setTimeout(() => {
-      this
-        .turn('R')
-        .then(() => delay(250))
-        .then(() => this.turn('U'))
-        .then(() => delay(250))
-        .then(() => this.turn('L'))
-        .then(() => delay(250))
-        .then(() => this.turn('B'))
-        .then(() => delay(250))
-        .then(() => this.turn('D'))
-        .then(() => delay(250))
-        .then(() => this.turn('F'))
+      [
+        "B2", "D'", "L", "B'", "D", "R'", "B", "D2", "R'", "B'", "L'", "U'",
+        "F'", "R'", "U2", "B", "L2", "B2", "L'", "U'", "F2", "U2", "B'", "U2", "F'"
+      ].reduce((promise, move) => {
+        return promise
+          .then(() => this.turn(move))
+          .then(() => delay(250));
+      }, Promise.resolve());
     }, 1000);
   }
 
@@ -414,35 +411,49 @@ class Cube {
     this.pivot = new Object3D();
     let activeCubes = [];
     let animateTurn = () => {};
+    let completedRotation;
+
+    // is this one turn, two turns, or three turns
+    if (move.endsWith("'")) {
+      // three turns
+      completedRotation = -NINETY_DEGREES;
+    } else if (move.endsWith("2")) {
+      // two turns
+      completedRotation = ONE_EIGHTY_DEGREES;
+    } else {
+      // one turn
+      completedRotation = NINETY_DEGREES;
+    }
+
     if (move.startsWith('F')) {
       activeCubes = FRONT_INDICES;
       animateTurn = (percent: number): void => {
-        this.pivot.rotation.z = -NINETY_DEGREES * percent;
+        this.pivot.rotation.z = -completedRotation * percent;
       }
     } else if (move.startsWith('B')) {
       activeCubes = BACK_INDICES;
       animateTurn = (percent: number): void => {
-        this.pivot.rotation.z = NINETY_DEGREES * percent;
+        this.pivot.rotation.z = completedRotation * percent;
       }
     } else if (move.startsWith('U')) {
       activeCubes = UP_INDICES;
       animateTurn = (percent: number): void => {
-        this.pivot.rotation.y = -NINETY_DEGREES * percent;
+        this.pivot.rotation.y = -completedRotation * percent;
       }
     } else if (move.startsWith('D')) {
       activeCubes = DOWN_INDICES;
       animateTurn = (percent: number): void => {
-        this.pivot.rotation.y = NINETY_DEGREES * percent;
+        this.pivot.rotation.y = completedRotation * percent;
       }
     } else if (move.startsWith('L')) {
       activeCubes = LEFT_INDICES;
       animateTurn = (percent: number): void => {
-        this.pivot.rotation.x = NINETY_DEGREES * percent;
+        this.pivot.rotation.x = completedRotation * percent;
       }
     } else if (move.startsWith('R')) {
       activeCubes = RIGHT_INDICES;
       animateTurn = (percent: number): void => {
-        this.pivot.rotation.x = -NINETY_DEGREES * percent;
+        this.pivot.rotation.x = -completedRotation * percent;
       }
     } else {
       throw new Error(`Unsupported move: ${move}`);
@@ -474,34 +485,49 @@ class Cube {
         SceneUtils.detach(active, this.pivot, this.scene);
         this.cubeContainer.add(active);
 
+        let corners;
+        let edges;
         // reorder cube with the updated position
-      if (move.startsWith('F')) {
-        this.cycle(2,8,26,20);
-        this.cycle(5,16,23,11);
-      } else if (move.startsWith('B')) {
-        this.cycle(0,18,24,6)
-        this.cycle(3,9,21,15)
-      } else if (move.startsWith('U')) {
-        this.cycle(6,24,26,8);
-        this.cycle(7,15,25,17);
-      } else if (move.startsWith('D')) {
-        this.cycle(0,2,20,18);
-        this.cycle(1,11,19,9);
-      } else if (move.startsWith('L')) {
-        this.cycle(0,6,8,2);
-        this.cycle(1,3,7,5)
-      } else if (move.startsWith('R')) {
-        this.cycle(18,20,26,24);
-        this.cycle(19,23,25,21);
-      } else {
-        throw new Error(`Unsupported move: ${move}`);
-      }
+        if (move.startsWith('F')) {
+          corners = [2,8,26,20];
+          edges = [5,17,23,11];
+        } else if (move.startsWith('B')) {
+          corners = [0,18,24,6];
+          edges = [3,9,21,15];
+        } else if (move.startsWith('U')) {
+          corners = [6,24,26,8];
+          edges = [7,15,25,17];
+        } else if (move.startsWith('D')) {
+          corners = [0,2,20,18];
+          edges = [1,11,19,9];
+        } else if (move.startsWith('L')) {
+          corners = [0,6,8,2];
+          edges = [1,3,7,5];
+        } else if (move.startsWith('R')) {
+          corners = [18,20,26,24];
+          edges = [19,23,25,21];
+        } else {
+          throw new Error(`Unsupported move: ${move}`);
+        }
+
+        if (move.endsWith("'")) {
+          this.cycle(...corners.slice().reverse());
+          this.cycle(...edges.slice().reverse());
+        } else if (move.endsWith('2')) {
+          this.swap(corners[0], corners[2]);
+          this.swap(corners[1], corners[3]);
+          this.swap(edges[0], edges[2]);
+          this.swap(edges[1], edges[3]);
+        } else {
+          this.cycle(...corners);
+          this.cycle(...edges);
+        }
       });
     })
   }
 
   /**
-   * cycle cubes after a turn.
+   * cycle cubes after a 90 degree turn.
    *
    * a -> b
    * b -> c
@@ -519,6 +545,21 @@ class Cube {
     cubes[k] = b;
     cubes[l] = c;
     cubes[i] = d;
+  }
+
+  /**
+   * swap cubes after an 180 degree turn.
+   *
+   * a -> b
+   * b -> c
+   */
+  swap = (i: number, j: number): void => {
+    const cubes = this.cubes;
+    const a = cubes[i];
+    const b = cubes[j];
+
+    cubes[i] = b;
+    cubes[j] = a;
   }
 
 
