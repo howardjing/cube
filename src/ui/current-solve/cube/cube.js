@@ -373,8 +373,10 @@ class Cube {
     this.renderer.setSize(width, height);
 
     this.camera = new PerspectiveCamera(75, width / height, 0.1, 1000);
-    this.camera.position.z = 10;
-
+    this.camera.position.z = 6;
+    this.camera.position.y = 3;
+    this.camera.position.x = 3;
+    this.camera.lookAt(new Vector3(0,0,0));
     this.cubeContainer = new Object3D();
     this.cubes = buildCubePositions(sides).map((position, i) =>
       // TODO: don't remember the meaning behind name `front`...
