@@ -19,7 +19,8 @@
     "react-addons-shallow-compare": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-vis": "^0.10.3",
-    "three": "^0.84.0"
+    "three": "^0.84.0",
+    "three-orbit-controls": "^82.1.0"
   },
   "scripts": {
     "start": "PORT=7777 react-scripts start",

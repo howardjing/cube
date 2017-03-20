@@ -12,9 +12,16 @@ import {
   SceneUtils,
 } from 'three';
 
+import OrbitControlsFactory from 'three-orbit-controls';
+
 import BezierEasing from 'bezier-easing';
 
 import type { Move } from '../../../store/scramble';
+
+// HACK: kinda sad, but `import THREE, { ... } from 'three';`
+// didn't work for me -- THREE was undefined.
+const OrbitControls = OrbitControlsFactory(require('three'));
+
 
 const ease = BezierEasing(0.25, 0.1, 0.25, 1) // ease function
 
@@ -377,6 +384,8 @@ class Cube {
     this.camera.position.y = 3;
     this.camera.position.x = 3;
     this.camera.lookAt(new Vector3(0,0,0));
+    new OrbitControls(this.camera);
+
     this.cubeContainer = new Object3D();
     this.cubes = buildCubePositions(sides).map((position, i) =>
       // TODO: don't remember the meaning behind name `front`...
