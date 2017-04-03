@@ -2,7 +2,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import Component from './component';
-import Store from '../../store';
+import Store from '../../../store';
 
 const Trend = ({ store }: {
   store: Store

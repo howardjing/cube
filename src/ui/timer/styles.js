@@ -2,7 +2,26 @@
 
 import { StyleSheet } from 'aphrodisiac';
 import { styles as solveStyles } from '../_common/solve-time';
-import merge from '../_common/styles/merge';
+import merge from '../_common/_styles/merge';
+
+const container = {
+  flex: '1',
+  padding: '20px',
+  backgroundColor: 'salmon'
+};
+
+const primary = {
+  display: 'flex',
+  backgroundColor: 'pink',
+  textAlign: 'center',
+  height: '100%',
+};
+
+const secondary = {
+  position: 'fixed',
+  top: '20px',
+  right: '20px',
+};
 
 const currentSolve = {
   display: 'flex',
@@ -16,25 +35,26 @@ const scramble = {
   backgroundColor: 'grey'
 }
 
-const timer = merge(solveStyles.time, {
+const solveTime = merge(solveStyles.time, {
   fontSize: '72px',
   backgroundColor: 'magenta',
 });
 
-const rescramble = {
-  cursor: 'pointer',
-};
 
 const styles: {
+  container: StyleSheetProp,
+  primary: StyleSheetProp,
+  secondary: StyleSheetProp,
   currentSolve: StyleSheetProp,
   scramble: StyleSheetProp,
-  timer: StyleSheetProp,
-  rescramble: StyleSheetProp,
+  solveTime: StyleSheetProp,
 } = StyleSheet.create({
+  container,
+  primary,
+  secondary,
   currentSolve,
   scramble,
-  timer,
-  rescramble,
+  solveTime,
 });
 
 export default styles;

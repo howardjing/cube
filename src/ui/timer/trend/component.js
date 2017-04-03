@@ -9,7 +9,7 @@ import {
   LineSeries
 } from 'react-vis';
 import 'react-vis/main.css';
-import Solve from '../../store/solve';
+import Solve from '../../../store/solve';
 import styles from './styles';
 
 const Trend = ({
@@ -33,7 +33,9 @@ const Trend = ({
     });
 
   const maxTime = Math.max(...data.map((time) => time.y));
-  const width = document.body.clientWidth * 0.8;
+  const width = document.body ?
+    document.body.clientWidth * 0.8 :
+    400;
   const height = 200;
 
   return (

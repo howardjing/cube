@@ -1,6 +1,6 @@
 // @flow
 import { StyleSheet } from 'aphrodisiac';
-import theme from '../styles/theme';
+import theme from '../_styles/theme';
 
 const styles: {
   time: StyleSheetProp,

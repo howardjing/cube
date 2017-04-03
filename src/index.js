@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { useStrict } from 'mobx';
 import { Provider } from 'mobx-react';
-import App from './ui';
+import App from './ui/timer';
 import Database from './database';
 import Store from './store';
 import './index.css';

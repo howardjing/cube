@@ -1,5 +1,8 @@
 [ignore]
 <PROJECT_ROOT>/node_modules/react-three-renderer/node_modules/fbjs/.*
+<PROJECT_ROOT>/node_modules/jss/*
+<PROJECT_ROOT>/node_modules/fbjs/*
+
 [include]
 
 [libs]

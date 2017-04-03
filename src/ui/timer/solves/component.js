@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { css } from 'aphrodisiac';
 import type { List } from 'immutable';
-import Solve from '../../store/solve';
-import SolveTime from '../_common/solve-time';
+import Solve from '../../../store/solve';
+import SolveTime from '../../_common/solve-time';
 import styles from './styles';
 
 const DisplaySolve = class extends Component {

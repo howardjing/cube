@@ -1,7 +1,7 @@
 // @flow
 import { StyleSheet } from 'aphrodisiac';
-import { styles as solveStyles } from '../_common/solve-time';
-import merge from '../_common/styles/merge';
+import { styles as solveStyles } from '../../_common/solve-time';
+import merge from '../../_common/_styles/merge';
 
 const solveTime = merge(solveStyles.time, {
   display: 'inline',
