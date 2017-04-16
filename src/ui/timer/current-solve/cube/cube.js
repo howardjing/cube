@@ -384,7 +384,7 @@ class Cube {
     this.camera.position.y = 3;
     this.camera.position.x = 3;
     this.camera.lookAt(new Vector3(0,0,0));
-    new OrbitControls(this.camera);
+    new OrbitControls(this.camera, this.renderer.domElement);
 
     this.cubeContainer = new Object3D();
     this.cubes = buildCubePositions(sides).map((position, i) =>
