@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import { List } from 'immutable';
 import { css } from 'aphrodisiac';
-import type { Status, Move } from '../../../store';
-import Solve from '../../../store/solve';
-import SolveTime from '../../_common/solve-time';
+import type { Status, Move } from 'domains/timer';
+import Solve from 'domains/timer/solve';
+import SolveTime from '../_common/solve-time';
 import styles from './styles';
 import Cube from './cube';
 

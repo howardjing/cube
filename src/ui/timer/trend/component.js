@@ -9,7 +9,7 @@ import {
   LineSeries
 } from 'react-vis';
 import 'react-vis/main.css';
-import Solve from '../../../store/solve';
+import Solve from 'domains/timer/solve';
 import styles from './styles';
 
 const Trend = ({

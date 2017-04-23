@@ -1,6 +1,7 @@
 // @flow
 import Dexie from 'dexie';
-import type { Move } from '../store/solve';
+import type { Move } from '../domains/timer';
+
 type Solve = {
   id: number,
   start: number,

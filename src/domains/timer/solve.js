@@ -1,7 +1,7 @@
 // @flow
 import { fromJS, Record, List } from 'immutable';
-import type { Solve as SolveJson } from '../../database';
-import type { Move } from '../index';
+import type { Solve as SolveJson } from 'database';
+import type { Move } from './scramble';
 
 // TODO: figure out how to add types to this
 class Solve extends Record({
@@ -47,8 +47,6 @@ class Solve extends Record({
   setSolveTime(millis: number): Solve {
     return this.set('solveTime', millis);
   }
-
-
 }
 
 export default Solve;

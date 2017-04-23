@@ -16,7 +16,7 @@ import OrbitControlsFactory from 'three-orbit-controls';
 
 import BezierEasing from 'bezier-easing';
 
-import type { Move } from '../../../../store/scramble';
+import type { Move } from 'domains/timer';
 
 // HACK: kinda sad, but `import THREE, { ... } from 'three';`
 // didn't work for me -- THREE was undefined.

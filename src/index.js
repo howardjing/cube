@@ -1,20 +1,28 @@
 // @flow
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useStrict } from 'mobx';
+import {
+  useStrict,
+  autorun,
+} from 'mobx';
 import { Provider } from 'mobx-react';
-import App from './ui/timer';
 import Database from './database';
-import Store from './store';
-import './index.css';
+import createStore from './domains/create-store';
+import App from './ui';
+import './index.css'
 
 useStrict(true);
 
 const db = new Database();
-const store = new Store(db);
+const store = createStore(db);
 
-// fetch data from indexedDB
-store.requestSolves()
+// keep window path in sync with route
+autorun(() => {
+  const path = store.routes.currentPath;
+  if (window.location.pathname !== path) {
+    window.history.pushState(null, null, path);
+  }
+});
 
 ReactDOM.render(
   <Provider store={store}>

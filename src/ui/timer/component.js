@@ -5,9 +5,15 @@ import styles from './styles';
 import Solves from './solves';
 import CurrentSolve from './current-solve';
 import Trend from './trend';
+import Link from 'ui/_common/link';
 
-const App = () => (
+const Timer = () => (
   <div className={css(styles.container)}>
+    <Link
+      to="tutorial"
+    >
+      Tutorial
+    </Link>
     <div className={css(styles.primary)}>
       <CurrentSolve />
       <Trend />
@@ -18,4 +24,4 @@ const App = () => (
   </div>
 );
 
-export default App;
+export default Timer;

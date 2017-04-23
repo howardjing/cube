@@ -5,9 +5,9 @@ import {
 } from 'mobx';
 import { List } from 'immutable';
 // eslint-disable-next-line no-unused-vars
-import type Database, { Solve as SolveJson } from '../database';
+import type Database, { Solve as SolveJson } from 'database';
 import Solve from './solve';
-import type { Move } from './solve';
+import type { Move } from './scramble';
 import _scramble from './scramble';
 
 type Status = 'idle' | 'inspecting' | 'solving';
@@ -29,7 +29,7 @@ const observables = {
   status: 'idle',
 };
 
-class Store {
+class Timer {
   db: Database;
 
   // previous solves
@@ -58,7 +58,7 @@ class Store {
       });
   }
 
-  requestSolves = action((): Promise<List<Solve>> => {
+  requestSolves = action('request-solves', (): Promise<List<Solve>> => {
     return this._requestSolves()
       .then(action((solves) => {
         this.solves = solves;
@@ -66,15 +66,15 @@ class Store {
       }));
   });
 
-  requestNewScramble = action(() => {
+  requestNewScramble = action('request-new-scramble', () => {
     this.scramble = scramble();
   });
 
-  requestNewSolve = action(() => {
+  requestNewSolve = action('request-new-solve', () => {
     this.solve = Solve.build();
   });
 
-  requestStartInspecting = action(() => {
+  requestStartInspecting = action('request-start-inspecting', () => {
     this.solve = this.solve.setStart(Date.now());
     this.status = 'inspecting';
   });
@@ -85,12 +85,12 @@ class Store {
     );
   }
 
-  requestStartSolving = action(() => {
+  requestStartSolving = action('request-start-solving', () => {
     this.solve = this.tickInspection();
     this.status = 'solving';
   });
 
-  requestStopSolving = action(() => {
+  requestStopSolving = action('request-stop-solving', () => {
     this.solve = this
       .tickSolve()
       .setScramble(this.scramble);
@@ -117,15 +117,15 @@ class Store {
     );
   };
 
-  requestTickInspection = action(() => {
+  requestTickInspection = action('request-tick-inspection', () => {
     this.solve = this.tickInspection();
   });
 
-  requestTickSolve = action(() => {
+  requestTickSolve = action('request-tick-solve', () => {
     this.solve = this.tickSolve();
   });
 
-  requestDeleteSolve = action((id: ?number) => {
+  requestDeleteSolve = action('request-delete-solve', (id: ?number) => {
     if (!id) { return; }
 
     this.db.deleteSolve(id);
@@ -135,7 +135,7 @@ class Store {
   });
 }
 
-export default Store;
+export default Timer;
 export type {
   Status,
   Move,
