@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Store } from 'domains/create-store';
-import type { Route } from 'domains/routes';
+import { Store } from '../../../domains/create-store';
+import type { Route } from '../../../domains/routes';
 import Component from './component';
 
 type Props = {

@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
-import type { Route } from 'domains/routes';
-import Routes from 'domains/routes';
+import type { Route } from '../../../domains/routes';
+import Routes from '../../../domains/routes';
 
 type Props = {
   to: Route,

@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { List } from 'immutable';
 import { css } from 'aphrodite';
-import type { Status, Move } from 'domains/timer';
-import Solve from 'domains/timer/solve';
+import type { Status, Move } from '../../../domains/timer';
+import Solve from '../../../domains/timer/solve';
 import SolveTime from '../_common/solve-time';
 import styles from './styles';
 import Cube from './cube';

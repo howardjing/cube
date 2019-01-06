@@ -1,6 +1,6 @@
 // @flow
 import { StyleSheet } from 'aphrodite';
-import theme from 'ui/_styles/theme';
+import theme from '../../../../ui/_styles/theme';
 
 const styles: {
   time: StyleSheetProp,

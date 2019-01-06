@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { css } from 'aphrodite';
 import type { List } from 'immutable';
-import Solve from 'domains/timer/solve';
+import Solve from '../../../domains/timer/solve';
 import SolveTime from '../_common/solve-time';
 import styles from './styles';
 

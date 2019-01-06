@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'ui/_common/link';
+import Link from '../_common/link';
 
 const Tutorial = () => (
   <div>

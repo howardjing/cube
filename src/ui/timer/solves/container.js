@@ -2,7 +2,7 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import Component from './component';
-import { Store } from 'domains/create-store';
+import { Store } from '../../../domains/create-store';
 
 const Solves = ({ store }: {
   store: Store
