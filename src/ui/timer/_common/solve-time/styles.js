@@ -1,5 +1,5 @@
 // @flow
-import { StyleSheet } from 'aphrodisiac';
+import { StyleSheet } from 'aphrodite';
 import theme from 'ui/_styles/theme';
 
 const styles: {

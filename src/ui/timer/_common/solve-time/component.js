@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { css } from 'aphrodisiac';
+import { css } from 'aphrodite';
 import format from './format';
 import styles from './styles';
 

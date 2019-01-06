@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { css } from 'aphrodisiac';
+import { css } from 'aphrodite';
 import type { List } from 'immutable';
 import Solve from 'domains/timer/solve';
 import SolveTime from '../_common/solve-time';
@@ -31,7 +31,7 @@ const DisplaySolve = class extends Component {
           className={css(styles.deleteIcon)}
           onClick={this.deleteSolve}
         >
-          &nbsp;❌
+          &nbsp;<span role="img" aria-label="remove">❌</span>
         </span>
       </div>
     )

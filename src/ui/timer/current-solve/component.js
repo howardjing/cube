@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { List } from 'immutable';
-import { css } from 'aphrodisiac';
+import { css } from 'aphrodite';
 import type { Status, Move } from 'domains/timer';
 import Solve from 'domains/timer/solve';
 import SolveTime from '../_common/solve-time';
@@ -154,7 +154,7 @@ class CurrentSolve extends Component {
             className={css(styles.rescramble)}
             onClick={onClickRefresh}
           >
-            &nbsp;🔄
+            &nbsp;<span role="img" aria-label="rescramble">🔄</span>
           </span>
         </div>
         <div>

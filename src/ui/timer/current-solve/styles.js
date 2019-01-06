@@ -1,6 +1,6 @@
 // @flow
 
-import { StyleSheet } from 'aphrodisiac';
+import { StyleSheet } from 'aphrodite';
 import merge from 'ui/_styles/merge';
 import { styles as solveStyles } from '../_common/solve-time';
 

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { List } from 'immutable';
-import { css } from 'aphrodisiac';
+import { css } from 'aphrodite';
 import {
   XYPlot,
   XAxis,

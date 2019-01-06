@@ -1,5 +1,5 @@
 // @flow
-import { StyleSheet } from 'aphrodisiac';
+import { StyleSheet } from 'aphrodite';
 
 const trend = {
   backgroundColor: 'purple',
